@@ -26,14 +26,20 @@ class AuthController extends BaseController
 		$cek = $this->userModel->cek_login($username, $password);
 
 		if (isset($cek['username']) && isset($cek['password'])) {
-			session()->set([
-				'username' => $cek['username'],
-				'name' => $cek['nama'],
-				'image' => $cek['image'],
-				'kelompok' => $cek['kelompok']
-			]);
-			return redirect()->to(base_url('/home',));
+			if ($cek['aktif'] == '1') {
+				session()->set([
+					'username' => $cek['username'],
+					'name' => $cek['nama'],
+					'image' => $cek['image'],
+					'kelompok' => $cek['kelompok']
+				]);
+				return redirect()->to(base_url('/home',));
+			} else {
+				session()->setFlashdata('warning', 'User Belom Aktif');
+				return redirect()->to(base_url('/'));
+			}
 		} else {
+
 			session()->setFlashdata('warning', 'Username atau password salah');
 			return redirect()->to(base_url('/'));
 		}
@@ -41,6 +47,7 @@ class AuthController extends BaseController
 
 	public function logout()
 	{
+
 		session()->destroy();
 		return redirect()->to(base_url('/'));
 	}

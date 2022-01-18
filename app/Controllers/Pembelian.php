@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use \App\Models\PembelianModel;
 use \App\Models\ProdukModel;
-use \App\Models\Laporan\JurnalModel;
 use App\Models\SupplierModel;
 
 class Pembelian extends BaseController
@@ -14,7 +13,6 @@ class Pembelian extends BaseController
     protected $pembelianModel;
     protected $produkModel;
     protected $supplierModel;
-    protected $jurnalModel;
 
     public function __construct()
     {
@@ -23,7 +21,6 @@ class Pembelian extends BaseController
         $this->pembelianModel = new PembelianModel();
         $this->produkModel = new ProdukModel();
         $this->supplierModel = new SupplierModel();
-        $this->jurnalModel = new JurnalModel();
     }
 
     public function index()
@@ -74,11 +71,13 @@ class Pembelian extends BaseController
         $this->validation->setRules(['jumlah_beli' => 'required']);
         $isDataValid            = $this->validation->withRequest($this->request)->run();
         $id_produk               = $this->request->getPost('id_produk');
+
         $jumlah_beli            = $this->request->getPost('jumlah_beli');
         $harga_satuan           = $this->request->getPost('harga_satuan');
 
         if ($isDataValid) {
-
+            $stok = $this->produkModel->getTotalStok($id_produk);
+            $total = $stok + $jumlah_beli;
             $jumlah_data = $this->pembelianModel->getCountData($id_pembelian);
 
             // dd($jumlah_data);
@@ -89,10 +88,15 @@ class Pembelian extends BaseController
                     'id_pembelian'                  => $id_pembelian,
                     'id_supplier'                   => $id_supplier,
                     'tanggal_pembelian'             => $newDate,
-                    'status'                        => 'LUNAS',
+                    'status'                        => 'Butuh Approve',
                 );
 
                 $this->pembelianModel->createPembelian($data_pembelian);
+
+                $update_stok = array(
+                    'stok' => $total,
+                );
+                $this->produkModel->updateProduk($update_stok, $id_produk);
 
                 $data_detail_pembelian = array(
                     'id_pembelian'          => $id_pembelian,
@@ -101,9 +105,13 @@ class Pembelian extends BaseController
                     'harga_satuan'          => $harga_satuan,
                     'jumlah_beli'           => $jumlah_beli,
                 );
-
                 $this->pembelianModel->createDetailPembelian($data_detail_pembelian);
             } else {
+                $update_stok = array(
+                    'stok' => $total,
+                );
+                $this->produkModel->updateProduk($update_stok, $id_produk);
+
                 $data_detail_pembelian = array(
                     'id_pembelian'          => $id_pembelian,
                     'id_produk'              => $id_produk,
@@ -132,43 +140,6 @@ class Pembelian extends BaseController
 
     public function selesai()
     {
-        $id_pembelian           = $this->session->get("id_pembelian");
-        $id_supplier            = $this->session->get("id_supplier");
-        $tanggal                = $this->session->get("tanggal");
-        $originalDate           = $tanggal;
-        $newDate                = date("Y-m-d", strtotime($originalDate));
-        $id_jurnalD             = $this->jurnalModel->code_jurnal_IDD();
-        $id_jurnalK             = $this->jurnalModel->code_jurnal_IDK();
-        $total_pembelian        = $this->pembelianModel->getTotalPembelian($id_pembelian);
-
-        //insert jurnal
-        $jurnal = [
-            [
-                'id_jurnal'     => $id_jurnalD,
-                'tanggal'       => $newDate,
-                'id_akun'       => 113,
-                'nominal'       => $total_pembelian,
-                'posisi'        => 'd',
-                'debet'         => $total_pembelian,
-                'kredit'        => 0,
-                'reff'          => $id_pembelian,
-                'transaksi'     => 'Pembelian'
-            ],
-            [
-                'id_jurnal'     => $id_jurnalK,
-                'tanggal'       => $newDate,
-                'id_akun'       => 111,
-                'nominal'       => $total_pembelian,
-                'posisi'        => 'k',
-                'debet'         => 0,
-                'kredit'        => $total_pembelian,
-                'reff'          => $id_pembelian,
-                'transaksi'     => 'Pembelian'
-            ],
-        ];
-
-        $this->jurnalModel->createOrderJurnal($jurnal);
-
         unset($_SESSION['id_pembelian']);
         unset($_SESSION['id_supplier']);
         unset($_SESSION['tanggal']);
@@ -192,5 +163,25 @@ class Pembelian extends BaseController
         session()->setFlashdata('success', 'Data Keranjang Berhasil Dihapus');
 
         return redirect()->to('/pembelian/addDetail');
+    }
+
+    public function approve()
+    {
+        $data = [
+            'title'                 => 'Data Pembelian',
+            'pembelian'             => $this->pembelianModel->getPembelianApprove(),
+        ];
+        return view('pembelian/view_data_pembelian', $data);
+    }
+
+    public function updateApprove($id_pembelian)
+    {
+        $data = array(
+            'status' => 'Approve',
+        );
+        // dd($id_pembelian);
+        $this->pembelianModel->updatePembelian($data, $id_pembelian);
+        session()->setFlashdata('success', 'Data Pembelian Approved');
+        return redirect()->to('pembelian/approve');
     }
 }

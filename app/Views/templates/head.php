@@ -24,6 +24,23 @@
     <link rel="stylesheet" href="<?= base_url('assets/css/main.css'); ?>" type="text/css">
     <link rel="stylesheet" href="<?= base_url('assets/toastr/toastr.min.css'); ?>">
 
+    <style>
+        @media print {
+            @page {
+                margin-top: 30px;
+                margin-bottom: 10px;
+                margin-left: 0px;
+                padding-left: 0px;
+            }
+
+            .left_sidebar,
+            footer,
+            .page-header {
+                display: none;
+            }
+        }
+    </style>
+
 </head>
 
 <body class="theme-black">

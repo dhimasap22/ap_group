@@ -40,11 +40,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="jenis_produk" class="col-form-label">Jenis Produk</label>
-                                    <select name="jenis_produk" class="selectpicker" title="- - - Pilih Jenis Produk - - -" data-live-search="true" data-live-search-placeholder="Cari ...">
-                                        <option value="Bolu">Bolu</option>
-                                        <option value="Cake">Cake</option>
-                                        <option value="Cookies">Cookies</option>
-                                    </select>
+                                    <input type="text" class="form-control" name="jenis_produk" placeholder="Jenis Produk" autocomplete="off">
                                     <?php if (isset($validation)) : ?>
                                         <span class="badge badge-danger"> <?= $validation->getError('jenis_produk') ?></span>
                                     <?php endif; ?>

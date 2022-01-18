@@ -26,11 +26,18 @@
 
                             <?= csrf_field(); ?>
                             <div class="form-row">
-                                <div class="form-group col-md-6">
+
+                                <div class="form-group col-md-12">
                                     <label for="id_supplier" class="col-form-label">ID Supplier</label>
                                     <input type="text" class="form-control" name="id_supplier" value="<?= $id_supplier; ?>" autocomplete="off" disabled>
                                 </div>
-                                <div class="form-group col-md-6">
+
+
+                            </div>
+
+                            <div class="form-row">
+
+                                <div class="form-group col-md-12">
                                     <label for="nama_supplier" class="col-form-label">Nama Supplier</label>
                                     <input type="text" class="form-control" name="nama_supplier" placeholder="Nama Supplier" autocomplete="off">
                                     <?php if (isset($validation)) : ?>

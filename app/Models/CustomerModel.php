@@ -19,7 +19,7 @@ class CustomerModel extends Model
                     'label'  => 'Nama Customer',
                     'rules'  => 'required',
                     'errors' => [
-                        'required' => ' {field} mohon dipilih',
+                        'required' => ' {field} mohon diisi',
                     ],
                 ],
                 'no_telp' =>
@@ -27,7 +27,7 @@ class CustomerModel extends Model
                     'label'  => 'No Telp',
                     'rules'  => 'required',
                     'errors' => [
-                        'required' => ' {field} mohon dipilih',
+                        'required' => ' {field} mohon diisi',
                     ],
                 ],
                 'alamat' =>
@@ -53,6 +53,13 @@ class CustomerModel extends Model
     public function getCustomer()
     {
         return $this->findAll();
+    }
+
+    public function getCustomerTotal()
+    {
+        $builder = $this->db->table('customer');
+        $query = $builder->countAllResults();
+        return $query;
     }
 
     public function getById($id)

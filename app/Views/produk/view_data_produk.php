@@ -31,14 +31,19 @@
                 <div class="col-lg-4 col-md-12">
                     <div class="card">
                         <div class="body text-right">
-                            <span class="badge badge-md typeface-badge badge-pill bg-success text-white">Stok <?= $prd['stok'] ?></span>
-                            <span class="badge badge-md typeface-badge badge-pill bg-primary text-white">Harga <?= nominal($prd['harga']) ?></span>
+                            <h5><span class="badge badge-md typeface-badge badge-pill bg-info text-white"><?= $prd['id_produk'] ?></span>
+                                <span class="badge badge-md typeface-badge badge-pill bg-success text-white">Stok <?= $prd['stok'] ?></span>
+                                <span class="badge badge-md typeface-badge badge-pill bg-primary text-white">Harga <?= nominal($prd['harga']) ?></span>
+                            </h5>
                         </div>
                         <div class="body text-center">
-                            <img class="img-fluid" src="<?= base_url('assets/images/product/' . $prd['product_image']) ?>" class="thumb-img img-fluid" width="282" height="282">
+                            <img class="img-fluid" src="<?= base_url('assets/images/product/' . $prd['product_image']) ?>" class="thumb-img img-fluid" width="250" height="250">
                             <div class="mt-4">
-                                <h6 class="font-17"> <?= $prd['id_produk'] ?></h6>
-                                <h6 class="font-17"> <?= $prd['nama_produk'] ?></h6>
+                                <h4 class=""> <b><?= $prd['nama_produk'] ?></b></h4>
+                            </div>
+                            <hr>
+                            <div class="">
+                                <p class="font-17"> <?= $prd['deskripsi'] ?></p>
                             </div>
                             <div class="text-center">
                                 <a href="<?= base_url('produk/edit/' . $prd['id_produk']) ?>" type="button" class="btn btn-warning btn-sm text-white"><i class="fa fa-edit fa-lg"></i></a>

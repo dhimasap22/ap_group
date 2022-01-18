@@ -29,7 +29,7 @@
                                         <th>ID Penjualan</th>
                                         <th>Pelanggan</th>
                                         <th>Tanggal</th>
-                                        <th>Status</th>
+                                        <!-- <th>Status</th> -->
                                         <th>Print</th>
                                         <th class="text-center"><i class="fa fa-cog fa-spin"></i></th>
                                     </tr>
@@ -46,11 +46,12 @@
                                             <td>
                                                 <?= $pnj['tanggal_penjualan'] ?>
                                             </td>
-                                            <td>
+                                            <!-- <td>
                                                 <span class="badge bg-success "><?= $pnj['status'] ?></span>
-                                            </td>
+                                            </td> -->
                                             <td class="text-center">
-                                                <button class="btn btn-success "> <i class="fa fa-print"></i></button>
+                                                <!-- <a href="javascript:window.print()" class="btn btn-info waves-effect "><i class="fa fa-print fa-lg text-white"></i></a> -->
+                                                <a href="<?= base_url('penjualan/print/' . $pnj['id_penjualan']); ?>" class="btn btn-info waves-effect "><i class="fa fa-print fa-lg text-white"></i></a>
                                             </td>
                                             <td class="d-print-none text-center">
                                                 <a href="<?= base_url('penjualan/detail/' . $pnj['id_penjualan']); ?>"><i class="fa fa-eye fa-lg text-info"></i></a>

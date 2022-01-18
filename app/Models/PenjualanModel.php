@@ -18,6 +18,13 @@ class PenjualanModel extends Model
         return $query->getResultArray();
     }
 
+    public function getPenjualanTotal()
+    {
+        $builder = $this->db->table('penjualan');
+        $query = $builder->countAllResults();
+        return $query;
+    }
+
     public function getById($id)
     {
         return $this->where(['id_penjualan' => $id])->first();
@@ -27,15 +34,6 @@ class PenjualanModel extends Model
     {
         $builder = $this->db->table('penjualan');
         $builder->where('penjualan.id_penjualan', $id_penjualan);
-        $query = $builder->countAllResults();
-        return $query;
-    }
-
-    public function getCart($id_customer)
-    {
-        $builder = $this->db->table('penjualan');
-        $builder->where('penjualan.id_customer', $id_customer);
-        $builder->where('penjualan.status', 'Cart');
         $query = $builder->countAllResults();
         return $query;
     }
@@ -81,19 +79,6 @@ class PenjualanModel extends Model
         return $total_harga;
     }
 
-    public function getTotalHpp($id_penjualan)
-    {
-        $builder = $this->db->table('detail_penjualan');
-        $builder->select('hpp,jumlah_jual');
-        $builder->where('id_penjualan', $id_penjualan);
-        $query = $builder->get()->getResultArray();
-        $total_harga = 0;
-        foreach ($query as $data) :
-            $total_harga += $data['hpp'] * $data['jumlah_jual'];
-        endforeach;
-
-        return $total_harga;
-    }
 
     public function getDetailPenjualan($id_penjualan)
     {
@@ -102,6 +87,17 @@ class PenjualanModel extends Model
         $builder->join('customer', 'customer.id_customer=detail_penjualan.id_customer');
         $builder->join('produk', 'produk.id_produk=detail_penjualan.id_produk');
         $builder->where('detail_penjualan.id_penjualan', $id_penjualan);
+        $query = $builder->get();
+        return $query->getResultArray();
+    }
+
+    public function getPrint($id_pemesanan)
+    {
+        $builder = $this->db->table('detail_penjualan');
+        $builder->join('penjualan', 'penjualan.id_penjualan=detail_penjualan.id_penjualan');
+        $builder->join('customer', 'customer.id_customer=detail_penjualan.id_customer');
+        $builder->where('penjualan.id_penjualan', $id_pemesanan);
+        $builder->groupBy('penjualan.id_customer');
         $query = $builder->get();
         return $query->getResultArray();
     }
@@ -118,16 +114,6 @@ class PenjualanModel extends Model
         return $query->getResult();
     }
 
-    public function getDetailCart($id_customer)
-    {
-        $builder = $this->db->table('penjualan');
-        $builder->join('detail_penjualan', 'detail_penjualan.id_penjualan=penjualan.id_penjualan');
-        $builder->join('produk', 'produk.id_produk=detail_penjualan.id_produk');
-        // $builder->join('customer', 'customer.id_customer=detail_penjualan.id_customer');
-        $builder->where('detail_penjualan.id_customer', $id_customer);
-        $query = $builder->get();
-        return $query->getResultArray();
-    }
 
     public function code_penjualan_ID()
     {
@@ -169,12 +155,6 @@ class PenjualanModel extends Model
     }
 
     public function deleteDetailPenjualan($id)
-    {
-        $query = $this->db->table('detail_penjualan')->delete(array('id_detail_penjualan' => $id));
-        return $query;
-    }
-
-    public function deleteCart($id)
     {
         $query = $this->db->table('detail_penjualan')->delete(array('id_detail_penjualan' => $id));
         return $query;

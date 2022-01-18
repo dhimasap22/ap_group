@@ -24,6 +24,8 @@
 	<link href="<?= base_url('assets_login/css/style.css') ?>" rel="stylesheet" type="text/css" />
 
 	<link href="<?= base_url('assets_login/css/all.css') ?>" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="<?= base_url('assets/toastr/toastr.min.css'); ?>">
+
 
 </head>
 
@@ -64,7 +66,7 @@
 														<?= view('Myth\Auth\Views\_message_block') ?>
 													</div>
 													<div class="p-3 custom-form">
-														<?= form_open('authcontroller/cek_login'); ?>
+														<?= form_open('AuthController/cek_login'); ?>
 														<div class="form-group">
 															<input type="text" name="username" class="form-control form-control-user" placeholder="Masukan username">
 														</div>
@@ -77,9 +79,11 @@
 																<label class="custom-control-label" for="customCheck">Remember Me</label>
 															</div>
 														</div>
-														<button type="submit" class="btn btn-primary btn-user btn-block">
+														<button type="submit" class="btn btn-info btn-user btn-block">
 															Login
+
 														</button>
+
 														<?= form_close(); ?>
 													</div>
 												</div>
@@ -98,6 +102,7 @@
 	</section>
 	<!-- end account-pages  -->
 	<!-- javascript -->
+
 	<script src="<?= base_url('assets_login/js/jquery.min.js') ?>"></script>
 	<script src="<?= base_url('assets_login/js/bootstrap.bundle.min.js') ?>"></script>
 	<script src="<?= base_url('assets_login/js/jquery.easing.min.js') ?>"></script>
@@ -116,6 +121,30 @@
 
 	<script src="<?= base_url('assets_login/js/all.js') ?>"></script>
 
+	<script src="<?= base_url('assets/toastr/toastr.min.js'); ?>"></script>
+	<script type="text/javascript">
+		<?php if (session()->getFlashdata('success')) { ?>
+			toastr.options.closeButton = true;
+			toastr.options.progressBar = true;
+			toastr.options.positionClass = 'toast-top-center';
+			toastr.success("<?= session()->getFlashdata('success'); ?>");
+		<?php } else if (session()->getFlashdata('error')) {  ?>
+			toastr.options.closeButton = true;
+			toastr.options.progressBar = true;
+			toastr.options.positionClass = 'toast-top-center';
+			toastr.error("<?= session()->getFlashdata('error'); ?>");
+		<?php } else if (session()->getFlashdata('warning')) {  ?>
+			toastr.options.closeButton = true;
+			toastr.options.progressBar = true;
+			toastr.options.positionClass = 'toast-top-center';
+			toastr.warning("<?= session()->getFlashdata('warning'); ?>");
+		<?php } else if (session()->getFlashdata('info')) {  ?>
+			toastr.options.closeButton = true;
+			toastr.options.progressBar = true;
+			toastr.options.positionClass = 'toast-top-center';
+			toastr.info("<?= session()->getFlashdata('info'); ?>");
+		<?php } ?>
+	</script>
 </body>
 
 </html>

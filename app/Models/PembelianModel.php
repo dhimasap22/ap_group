@@ -18,6 +18,22 @@ class PembelianModel extends Model
         return $query->getResultArray();
     }
 
+    public function getPembelianTotal()
+    {
+        $builder = $this->db->table('pembelian');
+        $query = $builder->countAllResults();
+        return $query;
+    }
+
+    public function getPembelianApprove()
+    {
+        $builder = $this->db->table('pembelian');
+        $builder->join('supplier', 'supplier.id_supplier=pembelian.id_supplier');
+        $builder->where('status', 'Butuh Approve');
+        $query = $builder->get();
+        return $query->getResultArray();
+    }
+
     public function getById($id)
     {
         return $this->where(['id_pembelian' => $id])->first();

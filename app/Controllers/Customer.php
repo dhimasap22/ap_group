@@ -13,6 +13,12 @@ class Customer extends BaseController
     {
         $this->validation =  \Config\Services::validation();
         $this->customerModel = new CustomerModel();
+        $this->session = \Config\Services::session();
+        $kelompok       = $this->session->get("kelompok");
+        if ($kelompok !== 'Admin') {
+            return redirect()->to('/home');
+            // return view('errors/html/error_404');
+        }
     }
 
     public function index()

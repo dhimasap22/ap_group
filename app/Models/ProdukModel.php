@@ -46,6 +46,13 @@ class ProdukModel extends Model
         return $this->findAll();
     }
 
+    public function getProdukTotal()
+    {
+        $builder = $this->db->table('produk');
+        $query = $builder->countAllResults();
+        return $query;
+    }
+
     public function getById($id)
     {
         return $this->where(['id_produk' => $id])->first();
@@ -89,5 +96,17 @@ class ProdukModel extends Model
     {
         $query = $this->db->table('produk')->delete(array('id_produk' => $id));
         return $query;
+    }
+    public function getTotalStok($id_produk)
+    {
+        $builder = $this->db->table('produk');
+        $builder->select('stok');
+        $builder->where('id_produk', $id_produk);
+        $query   = $builder->get()->getResultArray();
+        $stok = 0;
+        foreach ($query as $data) {
+            $stok = $data['stok'];
+        }
+        return $stok;
     }
 }

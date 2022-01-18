@@ -5,7 +5,7 @@
         <nav class="sidebar">
             <ul id="main-menu" class="metismenu">
                 <li class="g_heading">Main</li>
-                <li><a href="<?= base_url() ?>"><i class="ti-home"></i><span>Dashboard</span></a></li>
+                <li><a href="<?= base_url('/home') ?>"><i class="ti-home"></i><span>Dashboard</span></a></li>
 
                 <li class="g_heading">Master Data</li>
 
@@ -44,12 +44,16 @@
         <nav class="sidebar">
             <ul id="main-menu" class="metismenu">
                 <li class="g_heading">Main</li>
-                <li><a href="<?= base_url() ?>"><i class="ti-home"></i><span>Dashboard</span></a></li>
+                <li><a href="<?= base_url('/home') ?>"><i class="ti-home"></i><span>Dashboard</span></a></li>
 
                 <li class="g_heading">Master Data</li>
-                <li <?php if ($uri->getSegment(1) == "produk") {
+                <li <?php if ($uri->getSegment(1) == "pembelian/approve") {
                         echo 'class="active"';
-                    } ?>><a href="<?= base_url('produk') ?>"><i class="ti-notepad"></i><span>Produk</span></a></li>
+                    } ?>><a href="<?= base_url('pembelian/approve') ?>"><i class="ti-email"></i><span>Pembelian</span></a></li>
+
+                <li <?php if ($uri->getSegment(1) == "user") {
+                        echo 'class="active"';
+                    } ?>><a href="<?= base_url('user') ?>"><i class="ti-notepad"></i><span>User</span></a></li>
 
                 <li class="g_heading">Laporan</li>
                 <li>

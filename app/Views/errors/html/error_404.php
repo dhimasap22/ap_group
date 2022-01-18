@@ -6,8 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="description" content="">
 	<meta name="author" content="ThemeMakker">
-	<link rel="icon" href="/assets/images/logo_toko_serba_unik.png" type="image/x-icon">
-	<title>:: Toko Serba Unikt :: 404</title>
+	<link rel="icon" href="/assets/images/ap_group.png" type="image/x-icon">
+	<title>:: AP GROUP :: 404</title>
 	<link rel="stylesheet" href="../assets/vendor/themify-icons/themify-icons.css">
 	<link rel="stylesheet" href="../assets/vendor/fontawesome/css/font-awesome.min.css">
 
@@ -18,7 +18,7 @@
 	<!-- Page Loader -->
 	<div class="page-loader-wrapper">
 		<div class="loader">
-			<div class="m-t-30"><img src="/assets/images/logo_toko_serba_unik.png" width="48" height="48" alt="ArrOw"></div>
+			<div class="m-t-30"><img src="<?= base_url('/assets/images/ap_group.png'); ?>" width="48" height="48" alt="ArrOw"></div>
 			<p>Please wait...</p>
 		</div>
 	</div>
@@ -28,9 +28,7 @@
 			<div class="vertical-align-middle auth-main">
 				<div class="auth-box">
 					<div class="text-center pb-3">
-						<a href="index.html" class="logo">
-							<img src="<?= base_url(); ?>/assets/images/logo_toko_serba_unik.png" alt="" height="100" class="logo-dark mx-auto">
-						</a>
+
 					</div>
 					<div class="card">
 
@@ -38,6 +36,9 @@
 
 							<div class="text-center">
 								<h1 class="text-error">404</h1>
+								<a href="index.html" class="logo">
+									<img src="<?= base_url('/assets/images/ap_group.png'); ?>" alt="" height="100" class="logo-dark mx-auto">
+								</a>
 								<h3 class="mt-3 mb-2">Page not Found</h3>
 								<p class="text-muted mb-3">
 									<?php if (!empty($message) && $message !== '(null)') : ?>

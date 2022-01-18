@@ -1,7 +1,7 @@
 <nav class="navbar custom-navbar navbar-expand-lg py-2">
     <div class="container-fluid px-0">
         <a href="javascript:void(0);" class="menu_toggle"><i class="fa fa-align-left"></i></a>
-        <a href="index.html" class="navbar-brand"><img src="<?= base_url('assets/images/ap_group.png'); ?>" width="90" height="30" />
+        <a href="/home" class="navbar-brand"><img src="<?= base_url('assets/images/ap_group.png'); ?>" width="90" height="30" />
             <strong>AP</strong> Group</a>
         <div id="navbar_main">
             <ul class="navbar-nav ml-auto">
